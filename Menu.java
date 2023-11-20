@@ -49,7 +49,7 @@ class Menu implements Serializable {
 //Menyimpan menu ke dalam file
     // Metode untuk menulis menu ke file teks
     public void simpanMenuKeFile(String namaBerkas) {
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(namaBerkas))) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(namaBerkas, true))) {
             for (int i = 0; i < menuItems.size(); i++) {
                 MenuItem item = menuItems.get(i);
                 writer.write((i + 1) + ". " + item.getName() + " " + item.getPrice() + "(" + item.getCategory() + ")");
@@ -90,9 +90,9 @@ class Menu implements Serializable {
         try ( BufferedReader bufferedReader = new BufferedReader(new FileReader(file))) {
             String baris;
             menuItems = new ArrayList<>();
-
+            System.out.print("Daftar Menu Makanan dan Minuman\n");
             while ((baris = bufferedReader.readLine()) != null) {
-                System.out.print("Daftar Menu Makanan dan Minuman\n");
+                
                 System.out.println(" " + baris);
                 
                 
