@@ -1,12 +1,16 @@
 
+import java.io.IOException;
 import java.util.Scanner;
 
 public class Main {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         Scanner scanner = new Scanner(System.in);
         Menu restaurantMenu = new Menu();
         Pesanan customerOrder = new Pesanan();
+        String namaBerkas= "makanan.txt";
+        restaurantMenu.buatFile(namaBerkas);
+        
 
         int choice;//masukkan pilihan
         do {//program akan menjalankan/eksekusi perintah
@@ -19,12 +23,12 @@ public class Main {
             System.out.println("5. Exit");
             System.out.print("Masukkan Pilihan Anda: ");
             choice = scanner.nextInt();
-
             switch (choice) {//mempergunakan switch case 
                 case 1 ->//jika pilihan 1 
                     addItemToMenu(scanner, restaurantMenu);
+                    
                 case 2 ->
-                    restaurantMenu.tampilMenu();
+                    restaurantMenu.bacaMenuDariFile("makanan.txt");
                 case 3 ->
                     placeOrder(scanner, restaurantMenu, customerOrder);
                 case 4 ->
@@ -51,7 +55,7 @@ public class Main {
                 System.out.print("Menu Sudah Ada\n");
                 continue;//kembali menjalankan perintah do
             }
-           
+
             System.out.print("Harga: ");
             scanner.nextLine();
             double price = scanner.nextDouble();
@@ -64,12 +68,12 @@ public class Main {
                 System.out.print("Masukkan Jenis Makanan");
                 System.out.print("(Main/Appetizer): ");
                 String jenisMakanan = scanner.next();
-                newItem = new Makanan(name, price, jenisMakanan);
+                newItem = new Makanan(name, price,category, jenisMakanan);
             } else if (category.equalsIgnoreCase("Minuman")) {
                 System.out.print("Masukkan Jenis Minuman: ");
                 System.out.print("(Cold/Hot): ");
                 String jenisMinuman = scanner.next();
-                newItem = new Minuman(name, price, jenisMinuman);
+                newItem = new Minuman(name, price,category, jenisMinuman);
             } else if (category.equalsIgnoreCase("Discount")) {
                 System.out.print("Masukkan Persentase Diskon: ");
                 scanner.nextLine();
@@ -82,9 +86,12 @@ public class Main {
             }
 
             menu.addMenuItem(newItem);
+            menu.simpanMenuKeFile("makanan.txt");
             System.out.println("Menu Berhasil Ditambahkan");
             System.out.print("Tambah Menu Lagi? (Y/N): ");
+            
             tambahMenu = scanner.next().equalsIgnoreCase("Y");
+            
         } while (tambahMenu);//jika pengguna memasukkan tambah menu lagi
     }
 
