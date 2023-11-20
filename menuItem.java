@@ -1,4 +1,6 @@
 
+import java.io.Serializable;
+
 abstract class MenuItem { //kelas abstrak MenuItem 
     //yang akan menjadi kelas dasar 
     //untuk semua menu item dalam restoran
@@ -57,17 +59,27 @@ abstract class MenuItem { //kelas abstrak MenuItem
 
 }
 
-class Makanan extends MenuItem {//Selanjutnya kelas utama menuItem
+class Makanan extends MenuItem implements Serializable {
+    private static final long serialVersionUID = 1L;
+
+//Selanjutnya kelas utama menuItem
     //menurunkan atribut dan sifat atributnya
     //ke dalam kelas lain menggunakan extends
 
     private String jenisMakanan; //subkelas memiliki attribut tambahan jenisMakanan
 
-    public Makanan(String name, double price, String category) {
+    public Makanan() {
+        super("", 0.0, "");
         //ketika inisiasi kelas makanan
         //parameter yang digunakan nama harga kategori
-        super(name, price, category);//super menandakan bahwa eksekusinya mengikuti kelas
+        //super menandakan bahwa eksekusinya mengikuti kelas
         //super yaitu menuItem
+        this.jenisMakanan = "";
+    }
+// Konstruktor dengan parameter
+
+    public Makanan(String name, double price, String category, String jenisMakanan) {
+        super(name, price, category);
         this.jenisMakanan = jenisMakanan;
     }
 
@@ -81,15 +93,22 @@ class Makanan extends MenuItem {//Selanjutnya kelas utama menuItem
 
     @Override
     public MenuItem copy() {
-        return new Makanan(name, price, category);
+        return new Makanan(name, price, category, jenisMakanan);
     }
 }
 
-class Minuman extends MenuItem {
+class Minuman extends MenuItem implements Serializable {
+    private static final long serialVersionUID = 1L;
+
 
     private String jenisMinuman;
 
-    public Minuman(String name, double price, String category) {
+    public Minuman() {
+        super("", 0.0, "");
+        this.jenisMinuman = "";
+    }
+
+    public Minuman(String name, double price, String category, String jenisMinuman) {
         super(name, price, category);
         this.jenisMinuman = jenisMinuman;
     }
@@ -103,11 +122,13 @@ class Minuman extends MenuItem {
 
     @Override
     public MenuItem copy() {
-        return new Minuman(name, price, category);
+        return new Minuman(name, price, category, jenisMinuman);
     }
 }
 
-class Discount extends MenuItem {
+class Discount extends MenuItem implements Serializable {
+    private static final long serialVersionUID = 1L;
+
 
     private double discount;
 
