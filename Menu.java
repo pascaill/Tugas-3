@@ -15,11 +15,13 @@ class Menu implements Serializable {
     //untuk mengelola semua item menu dalam restoran. 
     //Kelas ini harus memiliki atribut berupa sebuah 
     //ArrayList untuk menyimpan semua item menu.
+    private int menuNumber = 1;
 
     ArrayList<MenuItem> menuItems;
 
     public Menu() {
         this.menuItems = new ArrayList<>();
+        int menuNumber = 1;
     }
 
     public void addMenuItem(MenuItem item) {
@@ -50,10 +52,12 @@ class Menu implements Serializable {
     // Metode untuk menulis menu ke file teks
     public void simpanMenuKeFile(String namaBerkas) {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(namaBerkas, true))) {
-            for (int i = 0; i < menuItems.size(); i++) {
-                MenuItem item = menuItems.get(i);
-                writer.write((i + 1) + ". " + item.getName() + " " + item.getPrice() + "(" + item.getCategory() + ")");
+            
+            for (MenuItem item: menuItems) {
+                
+                writer.write(menuNumber+ ". " + item.getName() + " " + item.getPrice() + "(" + item.getCategory() + ")");
                 writer.newLine();
+                menuNumber++;
             }
 
             System.out.println("Berhasil Menulis Menu ke  "+namaBerkas);
@@ -90,10 +94,12 @@ class Menu implements Serializable {
         try ( BufferedReader bufferedReader = new BufferedReader(new FileReader(file))) {
             String baris;
             menuItems = new ArrayList<>();
+            
             System.out.print("Daftar Menu Makanan dan Minuman\n");
             while ((baris = bufferedReader.readLine()) != null) {
                 
-                System.out.println(" " + baris);
+                System.out.println(baris);
+                
                 
                 
 
@@ -101,10 +107,6 @@ class Menu implements Serializable {
 
             System.out.println("Berhasil Membaca Menu dari File");
             
-        for (int i = 0; i < menuItems.size(); i++) {
-            MenuItem item = menuItems.get(i);
-            System.out.print((i + 1) + "." + item.getName() + " " + item.getPrice() + "(" + item.getCategory() + ")" + "\n");
-        }
         } catch (IOException e) {
             System.out.println("Gagal Baca File");
             e.printStackTrace();
